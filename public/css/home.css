@@ -1882,7 +1882,76 @@ color: var(--navy);
 .cfsAutoList{position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:99999;background:var(--white);border:1px solid rgba(1,7,37,.14);border-radius:16px;box-shadow:0 22px 55px rgba(1,7,37,.12);max-height:260px;overflow:auto;padding:6px}
 .cfsAutoItem{width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:12px;cursor:pointer;font-weight:800;color:rgba(1,7,37,.82);line-height:1.45;white-space:normal;word-break:break-word}
 .cfsAutoItem:hover{background:rgba(255,138,0,.12)}
+.cfsNiceSelect {
+  width: 100%;
+}
 
+.cfsNiceSelectBtn {
+  width: 100%;
+  height: 62px;
+  border: 1px solid rgba(15, 35, 65, 0.14);
+  border-radius: 16px;
+  background: #fff;
+  color: #071c34;
+  padding: 0 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.cfsNiceSelectBtn:hover,
+.cfsNiceSelect.is-open .cfsNiceSelectBtn {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 4px rgba(28, 118, 255, 0.12);
+}
+
+.cfsSelectArrow {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.cfsNiceSelectList {
+  margin-top: 8px;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid rgba(15, 35, 65, 0.14);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 14px 30px rgba(9, 24, 48, 0.12);
+}
+
+.cfsNiceOption {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #071c34;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cfsNiceOption:hover,
+.cfsNiceOption.is-selected {
+  background: rgba(28, 118, 255, 0.10);
+  color: var(--accent-blue);
+}
+
+.cfsFilterGroup {
+  margin-bottom: 22px;
+}
 .cfsCardsGrid{display:grid;grid-template-columns:repeat(2,552px);justify-content:center;gap:24px}
 .cfsCard{position:relative;width:100%;max-width:552px;height:594px;background:var(--white);border:1px solid var(--navy);border-radius:25px;overflow:hidden;filter:drop-shadow(0px 3px 4px rgba(0,0,0,.25));box-shadow:none;transition:transform .2s ease;margin:auto}
 .cfsCard:hover{transform:translateY(-3px);box-shadow:none}
@@ -1927,8 +1996,27 @@ color: var(--navy);
 .cfsEngine.is-on{filter:drop-shadow(0 0 14px rgba(255,0,0,.45));transform:scale(1.04)}
 .cfsMetaIcon{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .cfsMetaIcon svg{width:18px;height:18px;display:block;fill:none;stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.cfsSpecialBadge{position:absolute;left:36px;top:46px;z-index:9;min-width:150px;height:60px;padding:0 30px;border-radius:999px;background:var(--accent-blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:38px;line-height:1;letter-spacing:1px;text-transform:uppercase}
-
+.cfsSpecialBadge{
+  position: absolute;
+  left: 24px;
+  top: 30px;
+  z-index: 9;
+  min-width: 80px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--accent-blue);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
 @media(max-width:1200px){.cfsCardsGrid{grid-template-columns:repeat(2,minmax(420px,1fr))}}
 @media(max-width:980px){.cfsTop{align-items:flex-start;flex-direction:column}.cfsGridFilters{grid-template-columns:1fr}.cfsCardsGrid{grid-template-columns:1fr}}
 @media(max-width:700px){

@@ -19,15 +19,28 @@
 
     {{-- ===== Basics ===== --}}
     <div class="grid2">
-      <div>
-        <label>Brand</label>
-        <input name="brand" value="{{ old('brand') }}" required>
-      </div>
+<div>
+  <label>Brand</label>
+  <select name="brand" id="adminBrandSelect" required>
+    <option value="">Select Brand</option>
+    @foreach($brands as $brand)
+      <option value="{{ $brand }}" {{ old('brand') == $brand ? 'selected' : '' }}>
+        {{ $brand }}
+      </option>
+    @endforeach
+  </select>
+</div>
 
-      <div>
-        <label>Model</label>
-        <input name="model" value="{{ old('model') }}" required>
-      </div>
+<div>
+  <label>Model</label>
+  <select name="model" id="adminModelSelect" required data-selected="{{ old('model') }}">
+    <option value="">Select Model</option>
+  </select>
+</div>
+
+<script>
+  window.adminModelsByBrand = @json($modelsByBrand);
+</script>
 
       <div>
         <label>Year</label>
@@ -174,4 +187,41 @@
 </div>
   </form>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const brandSelect = document.getElementById("adminBrandSelect");
+  const modelSelect = document.getElementById("adminModelSelect");
+  const modelsByBrand = window.adminModelsByBrand || {};
+
+  if (!brandSelect || !modelSelect) return;
+
+  function fillModels() {
+    const selectedBrand = brandSelect.value;
+    const selectedModel = modelSelect.dataset.selected || "";
+
+    modelSelect.innerHTML = '<option value="">Select Model</option>';
+
+    const models = modelsByBrand[selectedBrand] || [];
+
+    models.forEach(function (model) {
+      const option = document.createElement("option");
+      option.value = model;
+      option.textContent = model;
+
+      if (model === selectedModel) {
+        option.selected = true;
+      }
+
+      modelSelect.appendChild(option);
+    });
+  }
+
+  brandSelect.addEventListener("change", function () {
+    modelSelect.dataset.selected = "";
+    fillModels();
+  });
+
+  fillModels();
+});
+</script>
 @endsection

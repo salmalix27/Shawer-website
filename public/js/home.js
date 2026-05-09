@@ -209,10 +209,10 @@
     });
   }
 
-  function toNumber(id) {
-    const el = document.getElementById(id);
-    return Number(el?.value || 0);
-  }
+function toNumber(id) {
+  const el = document.getElementById(id);
+  return Number(String(el?.value || "0").replace(/[^\d]/g, ""));
+}
 
   const btn = document.getElementById("calcBtn");
   if (!btn) return;
@@ -361,7 +361,7 @@ if (years > MAX_YEARS) {
       .replace(/[-_]/g, " ")
       .replace(/\s+/g, " ");
 
-  /* 8.1 Main accordion (default closed) */
+
   const head = filterCard.querySelector('[data-acc="filters"]');
   const body = filterCard.querySelector('[data-acc-body="filters"]');
 
@@ -409,64 +409,120 @@ if (years > MAX_YEARS) {
   });
 
   /* 8.3 Brand autocomplete */
+ document.addEventListener("DOMContentLoaded", () => {
+  const modelsByBrand = window.modelsByBrand || {};
+
+  const brandWrap = document.querySelector('[data-custom-select="brand"]');
+  const modelWrap = document.querySelector('[data-custom-select="model"]');
+
   const brandInput = document.getElementById("brandInput");
-  const list = document.getElementById("brandList");
+  const modelInput = document.getElementById("modelInput");
 
-  if (brandInput && list) {
-    let brands = [];
-    try {
-      brands = JSON.parse(filterCard.getAttribute("data-brands") || "[]");
-    } catch (_) {
-      brands = [];
-    }
+  const modelList = document.getElementById("modelCustomList");
 
-    const hideList = () => {
-      list.hidden = true;
-      list.innerHTML = "";
-    };
+  if (!brandWrap || !modelWrap || !brandInput || !modelInput || !modelList) return;
 
-    const showList = (items) => {
-      if (!items.length) return hideList();
-
-      list.hidden = false;
-      list.innerHTML = items
-        .slice(0, 12)
-        .map((x) => {
-          const safe = String(x).replace(/"/g, "&quot;");
-          return `<button type="button" class="cfsAutoItem" data-val="${safe}">${x}</button>`;
-        })
-        .join("");
-    };
-
-    const filterNow = () => {
-      const q = norm(brandInput.value);
-      if (!q) return showList(brands);
-
-      const matches = brands.filter((b) => norm(b).includes(q));
-      showList(matches);
-    };
-
-    brandInput.addEventListener("focus", () => {
-      const parentDrop = brandInput.closest("[data-drop]");
-      if (parentDrop) openDrop(parentDrop, true);
-      filterNow();
-    });
-
-    brandInput.addEventListener("input", filterNow);
-
-    list.addEventListener("mousedown", (e) => {
-      const item = e.target.closest(".cfsAutoItem");
-      if (!item) return;
-      e.preventDefault();
-      brandInput.value = item.getAttribute("data-val") || "";
-      hideList();
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target === brandInput || list.contains(e.target)) return;
-      hideList();
+  function closeAllExcept(currentWrap) {
+    document.querySelectorAll("[data-custom-select]").forEach((wrap) => {
+      if (wrap !== currentWrap) {
+        wrap.classList.remove("is-open");
+        const list = wrap.querySelector("[data-select-list]");
+        if (list) list.hidden = true;
+      }
     });
   }
+
+  function setDropdownValue(wrap, value, text) {
+    const input = wrap.querySelector("input[type='hidden']");
+    const textEl = wrap.querySelector("[data-select-text]");
+
+    if (input) input.value = value || "";
+    if (textEl) textEl.textContent = text || "";
+  }
+
+  function buildModelList(brand, selectedModel = "") {
+    const models = modelsByBrand[brand] || [];
+
+    modelList.innerHTML = "";
+
+    const allBtn = document.createElement("button");
+    allBtn.type = "button";
+    allBtn.className = "cfsNiceOption";
+    allBtn.dataset.value = "";
+    allBtn.textContent = "All Models";
+
+    if (!selectedModel) allBtn.classList.add("is-selected");
+
+    modelList.appendChild(allBtn);
+
+    models.forEach((model) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cfsNiceOption";
+      btn.dataset.value = model;
+      btn.textContent = model;
+
+      if (model === selectedModel) {
+        btn.classList.add("is-selected");
+      }
+
+      modelList.appendChild(btn);
+    });
+
+    if (!models.includes(selectedModel)) {
+      modelInput.value = "";
+      setDropdownValue(modelWrap, "", "All Models");
+    }
+  }
+
+  document.querySelectorAll("[data-custom-select]").forEach((wrap) => {
+    const btn = wrap.querySelector("[data-select-btn]");
+    const list = wrap.querySelector("[data-select-list]");
+
+    if (!btn || !list) return;
+
+    btn.addEventListener("click", () => {
+      const isOpen = wrap.classList.contains("is-open");
+
+      closeAllExcept(wrap);
+
+      wrap.classList.toggle("is-open", !isOpen);
+      list.hidden = isOpen;
+    });
+
+    list.addEventListener("click", (e) => {
+      const option = e.target.closest(".cfsNiceOption");
+      if (!option) return;
+
+      const value = option.dataset.value || "";
+      const text = option.textContent.trim();
+
+      list.querySelectorAll(".cfsNiceOption").forEach((el) => {
+        el.classList.remove("is-selected");
+      });
+
+      option.classList.add("is-selected");
+
+      setDropdownValue(wrap, value, text);
+
+      wrap.classList.remove("is-open");
+      list.hidden = true;
+
+      if (wrap.dataset.customSelect === "brand") {
+        modelInput.value = "";
+        setDropdownValue(modelWrap, "", "All Models");
+        buildModelList(value, "");
+      }
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-custom-select]")) return;
+    closeAllExcept(null);
+  });
+
+  buildModelList(brandInput.value, modelInput.value);
+});
 
   /* 8.4 Cards slider inside each car card */
   document.querySelectorAll("[data-slider]").forEach((card) => {
@@ -711,4 +767,67 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const priceInputs = document.querySelectorAll(".js-price-comma");
+
+  priceInputs.forEach(function (input) {
+    function formatWithCommas() {
+      let cursorPosition = input.selectionStart;
+      let oldLength = input.value.length;
+
+      const onlyNumbers = input.value.replace(/[^\d]/g, "");
+
+      if (!onlyNumbers) {
+        input.value = "";
+        return;
+      }
+
+      input.value = Number(onlyNumbers).toLocaleString("en-US");
+
+      let newLength = input.value.length;
+      input.setSelectionRange(
+        cursorPosition + (newLength - oldLength),
+        cursorPosition + (newLength - oldLength)
+      );
+    }
+
+    input.addEventListener("input", formatWithCommas);
+    formatWithCommas();
+  });
+
+  document.querySelectorAll("form").forEach(function (form) {
+    form.addEventListener("submit", function () {
+      form.querySelectorAll(".js-price-comma").forEach(function (input) {
+        input.value = input.value.replace(/[^\d]/g, "");
+      });
+    });
+  });
+});
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".js-price-comma").forEach(function (input) {
+    function formatWithCommas() {
+      let onlyNumbers = input.value.replace(/[^\d]/g, "");
+
+      if (!onlyNumbers) {
+        input.value = "";
+        return;
+      }
+
+      input.value = Number(onlyNumbers).toLocaleString("en-US");
+    }
+
+    input.addEventListener("input", formatWithCommas);
+    formatWithCommas();
+  });
+
+  const filterForm = document.querySelector(".cfsFilterCard form") || document.querySelector("form");
+
+  if (filterForm) {
+    filterForm.addEventListener("submit", function () {
+      document.querySelectorAll(".js-price-comma").forEach(function (input) {
+        input.value = input.value.replace(/[^\d]/g, "");
+      });
+    });
+  }
 });

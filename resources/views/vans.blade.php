@@ -66,12 +66,25 @@
   <div class="bncCalc__body">
     <div class="bncField">
       <label class="bncLabel" id="vanLabelPrice">PRICE OF CAR</label>
-      <input class="bncInput" type="number" id="carPrice" placeholder="e.g. 200000" min="0" max="6000000">
+                  <input
+      class="bncInput js-price-comma"
+      type="text"
+      id="carPrice"
+      placeholder="e.g. 200,000"
+      inputmode="numeric"
+      data-max="6000000"
+    >
     </div>
 
     <div class="bncField">
       <label class="bncLabel" id="vanLabelDown">DOWN PAYMENT</label>
-      <input class="bncInput" type="number" id="downPayment" placeholder="e.g. 20000" min="0">
+                       <input
+      class="bncInput js-price-comma"
+      type="text"
+      id="downPayment"
+      placeholder="e.g. 20,000"
+      inputmode="numeric"
+    >
     </div>
 
     <div class="bncField">

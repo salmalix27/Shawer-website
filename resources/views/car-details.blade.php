@@ -54,8 +54,8 @@
 
   <div class="carDActions">
     <div class="carDButtons">
-      <a class="carDWhats" target="_blank" href="https://wa.me/201044154470" id="carDWhatsappBtn">WHATSAPP</a>
-      <a class="carDWhats" href="tel:01044154470" id="carDCallBtn" title="01044154470">CALL NOW</a>
+      <a class="carDWhats" target="_blank" href="https://wa.me/201034221233 id="carDWhatsappBtn">WHATSAPP</a>
+      <a class="carDWhats" href="tel:01044154470" id="carDCallBtn" title="01034324525">CALL NOW</a>
     </div>
 
     <button type="button" class="carDShareBtn" id="sharePageBtn" aria-label="Share this page">
@@ -237,24 +237,24 @@
     <div class="bncCalc__body">
       <div class="bncField">
         <label class="bncLabel" id="carDCalcPrice">PRICE OF CAR</label>
-        <input
-          class="bncInput"
-          id="carPrice"
-          type="number"
-          value="{{ (int)$car->price }}"
-          disabled
-        >
+   <input
+  class="bncInput js-price-comma"
+  id="carPrice"
+  type="text"
+  value="{{ number_format((int) $car->price) }}"
+  disabled
+>
       </div>
 
       <div class="bncField">
         <label class="bncLabel" id="carDCalcDown">DOWN PAYMENT</label>
-        <input
-          class="bncInput"
-          id="downPayment"
-          type="number"
-          value="0"
-          min="0"
-        >
+                  <input
+      class="bncInput js-price-comma"
+      type="text"
+      id="downPayment"
+      placeholder="e.g. 20,000"
+      inputmode="numeric"
+    >
       </div>
 
       <div class="bncField">

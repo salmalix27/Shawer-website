@@ -42,33 +42,58 @@
           <div class="cfsGridFilters">
 
             <!-- Brand/Model -->
-            <div class="cfsDrop" data-drop>
-              <button type="button" class="cfsDropHead" data-drop-btn>
-                <span id="cfsBrandModelLabel">Brand / Model</span>
-                <span class="cfsChevronSmall">▾</span>
-              </button>
+           <div class="cfsFilterGroup">
+    <label id="cfsBrandLabel" class="cfsLabel">Brand</label>
 
-              <div class="cfsDropBody" data-drop-body>
-                <div class="cfsField">
-                  <label class="cfsLabel"> </label>
+    <div class="cfsNiceSelect" data-custom-select="brand">
+        <input type="hidden" name="brand" id="brandInput" value="{{ request('brand') }}">
 
-                  <div class="cfsAuto">
-                    <input
-                      class="cfsInput"
-                      type="text"
-                      name="brand"
-                      id="brandInput"
-                      value="{{ request('brand') }}"
-                      placeholder="e.g. mercedes, bmw, toyota..."
-                      autocomplete="off"
-                    />
-                    <div class="cfsAutoList" id="brandList" hidden></div>
-                  </div>
+        <button type="button" class="cfsNiceSelectBtn" data-select-btn>
+            <span data-select-text>
+                {{ request('brand') ?: 'All Brands' }}
+            </span>
+            <span class="cfsSelectArrow">▾</span>
+        </button>
 
-                  <div class="cfsHint"> </div>
-                </div>
-              </div>
-            </div>
+        <div class="cfsNiceSelectList" data-select-list hidden>
+            <button type="button" class="cfsNiceOption" data-value="">All Brands</button>
+
+            @foreach($brands as $brandItem)
+                <button 
+                    type="button" 
+                    class="cfsNiceOption" 
+                    data-value="{{ $brandItem }}">
+                    {{ $brandItem }}
+                </button>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<div class="cfsFilterGroup">
+    <label id="cfsModelLabel" class="cfsLabel">Model</label>
+
+    <div class="cfsNiceSelect" data-custom-select="model">
+        <input type="hidden" name="model" id="modelInput" value="{{ request('model') }}">
+
+        <button type="button" class="cfsNiceSelectBtn" data-select-btn>
+            <span data-select-text>
+                {{ request('model') ?: 'All Models' }}
+            </span>
+            <span class="cfsSelectArrow">▾</span>
+        </button>
+
+        <div class="cfsNiceSelectList" id="modelCustomList" data-select-list hidden>
+            <button type="button" class="cfsNiceOption" data-value="">All Models</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.modelsByBrand = @json($modelsByBrand);
+    window.selectedBrand = @json(request('brand'));
+    window.selectedModel = @json(request('model'));
+</script>
 
             <!-- Price -->
             <div class="cfsDrop" data-drop>
@@ -78,9 +103,26 @@
               </button>
               <div class="cfsDropBody" data-drop-body>
                 <div class="cfsDual">
-                  <input class="cfsInput" type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" id="cfsMinPrice">
-                  <input class="cfsInput" type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" id="cfsMaxPrice">
-                </div>
+                 <input
+  class="cfsInput js-price-comma"
+  type="text"
+  name="min_price"
+  value="{{ request('min_price') ? number_format((float) request('min_price')) : '' }}"
+  placeholder="Min"
+  id="cfsMinPrice"
+  inputmode="numeric"
+>
+
+<input
+  class="cfsInput js-price-comma"
+  type="text"
+  name="max_price"
+  value="{{ request('max_price') ? number_format((float) request('max_price')) : '' }}"
+  placeholder="Max"
+  id="cfsMaxPrice"
+  inputmode="numeric"
+>
+ </div>
               </div>
             </div>
 
@@ -276,11 +318,11 @@
   </div>
 
   <div class="cfsCardActions">
-<a class="cfsBtnDark cfsWhatsappBtn" target="_blank" href="https://wa.me/201044154470">
+<a class="cfsBtnDark cfsWhatsappBtn" target="_blank" href="https://wa.me/201034221233">
   WHATSAPP
 </a>
 
-<a class="cfsBtnLight cfsCallBtn" href="tel:01044154470" title="01044154470">
+<a class="cfsBtnLight cfsCallBtn" href="tel:01034324525" title="01034324525">
   CALL NOW
 </a>
   </div>

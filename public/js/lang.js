@@ -1,5 +1,78 @@
 const LANG_KEY = "site_lang";
-
+const CAR_BRAND_AR = {
+  "Alfa Romeo": "ألفا روميو",
+  "Audi": "أودي",
+  "Avatr": "أفاتر",
+  "BAIC": "بايك",
+  "BMW": "بي إم دبليو",
+  "BYD": "بي واي دي",
+  "Bentley": "بنتلي",
+  "Brilliance": "بريليانس",
+  "Cadillac": "كاديلاك",
+  "Changan": "شانجان",
+  "Changhe": "شانغه",
+  "Chery": "شيري",
+  "Chevrolet": "شيفروليه",
+  "Chrysler": "كرايسلر",
+  "Citroen": "سيتروين",
+  "Cupra": "كوبرا",
+  "DFSK": "دي إف إس كي",
+  "DS": "دي إس",
+  "Dodge": "دودج",
+  "Dongfeng": "دونج فينج",
+  "EXEED": "إكسيد",
+  "Faw": "فاو",
+  "Ferrari": "فيراري",
+  "Fiat": "فيات",
+  "Ford": "فورد",
+  "GAC": "جي أيه سي",
+  "GMC": "جي إم سي",
+  "Geely": "جيلي",
+  "Golf Car": "جولف كار",
+  "Haval": "هافال",
+  "Hummer": "هامر",
+  "Honda": "هوندا",
+  "Hyundai": "هيونداي",
+  "Infiniti": "إنفينيتي",
+  "Isuzu": "إيسوزو",
+  "JAC": "جاك",
+  "Jaguar": "جاكوار",
+  "Jeep": "جيب",
+  "Jetour": "جيتور",
+  "KGM": "كي جي إم",
+  "Kia": "كيا",
+  "Lamborghini": "لامبورجيني",
+  "Land Rover": "لاند روفر",
+  "Lexus": "لكزس",
+  "Lotus": "لوتس",
+  "Mercedes-Benz": "مرسيدس بنز",
+  "mercedes benz": "مرسيدس بنز",
+  "MG": "إم جي",
+  "Maserati": "مازيراتي",
+  "Mazda": "مازدا",
+  "Mini": "ميني",
+  "Mitsubishi": "ميتسوبيشي",
+  "Nissan": "نيسان",
+  "Opel": "أوبل",
+  "Peugeot": "بيجو",
+  "Porsche": "بورشه",
+  "Proton": "بروتون",
+  "Renault": "رينو",
+  "Rolls Royce": "رولز رويس",
+  "Seat": "سيات",
+  "Skoda": "سكودا",
+  "Soueast": "ساو إيست",
+  "Subaru": "سوبارو",
+  "Suzuki": "سوزوكي",
+  "Tesla": "تسلا",
+  "Toyota": "تويوتا",
+  "Volkswagen": "فولكس فاجن",
+  "Volvo": "فولفو",
+  "XPeng": "إكس بينج",
+  "Zeekr": "زيكر",
+  "Xiaomi": "شاومي",
+  "xiaomi": "شاومي"
+};
 const TEXTS = {
   en: {
     nav: {
@@ -286,8 +359,10 @@ carsForSalePage: {
   results: "Results",
   filtersTitle: "Filters",
   filtersHint: "Pick what you need",
-  brandModel: "Brand / Model",
-  brandPh: "e.g. mercedes, bmw, toyota...",
+  brand: "Brand",
+model: "Model",
+allBrands: "All Brands",
+allModels: "All Models",
   price: "Price (EGP)",
   km: "Kilometres",
   year: "Year",
@@ -305,7 +380,8 @@ carsForSalePage: {
   metaYear: "Year",
   metaKm: "KM",
   metaFuel: "Fuel",
-  metaTrans: "Transmission"
+  metaTrans: "Transmission",
+  cfsPriceLabel: "Price (EGP)"
 },
 carDetailsPage: {
   whatsapp: "WHATSAPP",
@@ -423,8 +499,7 @@ ar: {
   },
 
   aboutPage: {
-    title: "نبذة عن شركة ",
-    titleSpan: "شاور",
+    title: "  عن شاور  ",
     desc:
       "مرحبًا بك في شاور، منصة تمويل ذكية تربطك بجهات التمويل المختلفة في مصر۔ نُبسّط الإجراءات ونرشدك خطوة بخطوة حتى تتم الموافقة على تمويلك۔",
 
@@ -647,8 +722,10 @@ ar: {
     results: "عدد النتائج",
     filtersTitle: "الفلاتر",
     filtersHint: "اختر ما تحتاج إليه",
-    brandModel: "الماركة / الموديل",
-    brandPh: "مثال: مرسيدس، بي إم دبليو، تويوتا۔۔۔",
+  brand: "الماركة",
+model: "الموديل",
+allBrands: "كل الماركات",
+allModels: "كل الموديلات",
     price: "السعر جنيه",
     km: "عدد الكيلومترات",
     year: "السنة",
@@ -666,7 +743,8 @@ ar: {
     metaYear: "السنة",
     metaKm: "كم",
     metaFuel: "الوقود",
-    metaTrans: "ناقل الحركة"
+    metaTrans: "ناقل الحركة",
+    cfsPriceLabel: "السعر (ج.م)"
   },
 
   carDetailsPage: {
@@ -1105,17 +1183,26 @@ function applyCarsForSaleTranslation(lang) {
   setText("cfsTitle", d.h1);
   setText("cfsSub", d.sub);
   setText("cfsResultsLabel", d.results);
-document.querySelectorAll(".cfsWhatsappBtn").forEach(el => {
-  el.textContent = d.whatsapp;
-});
 
-document.querySelectorAll(".cfsCallBtn").forEach(el => {
-  el.textContent = d.CALL;
-});
+  document.querySelectorAll(".cfsWhatsappBtn").forEach(el => {
+    el.textContent = d.whatsapp;
+  });
+
+  document.querySelectorAll(".cfsCallBtn").forEach(el => {
+    el.textContent = d.CALL;
+  });
+
   setText("cfsFiltersTitle", d.filtersTitle);
   setText("cfsFiltersHint", d.filtersHint);
+
+  // Brand / Model labels for custom dropdown
+  setText("cfsBrandLabel", d.brand);
+  setText("cfsModelLabel", d.model);
+
+  // Old label if it still exists
   setText("cfsBrandModelLabel", d.brandModel);
-  setText("cfsPriceLabel", d.price);
+
+  setText("cfsPriceLabel", d.cfsPriceLabel || d.price);
   setText("cfsKmLabel", d.km);
   setText("cfsYearLabel", d.year);
   setText("cfsTransLabel", d.transmission);
@@ -1134,19 +1221,18 @@ document.querySelectorAll(".cfsCallBtn").forEach(el => {
   setText("cfsResetBtn", d.reset);
   setText("cfsApplyBtn", d.apply);
 
-  // empty state  
+  // empty state
   setText("cfsEmptyTitle", d.emptyTitle);
   setText("cfsEmptyDesc", d.emptyDesc);
   setText("cfsEmptyBack", d.back);
 
-  // card labels  
+  // card labels
   setText("cfsWhatsappBtn", d.whatsapp);
   setText("cfsYearText", d.metaYear);
   setText("cfsKmText", d.metaKm);
   setText("cfsFuelText", d.metaFuel);
   setText("cfsTransText", d.metaTrans);
 
-  
   document.querySelectorAll(".cfsTransItem").forEach(el => {
     const v = el.getAttribute("data-tr");
     if (lang === "ar") {
@@ -1170,6 +1256,9 @@ document.querySelectorAll(".cfsCallBtn").forEach(el => {
       el.textContent = v;
     }
   });
+
+  // Translate Brand / Model custom dropdown options
+  updateCarDropdownTranslations(lang);
 }
 function applyCarDetailsTranslation(lang) {
   const d = (TEXTS[lang] || TEXTS.en).carDetailsPage;
@@ -1211,6 +1300,9 @@ function applyCarDetailsTranslation(lang) {
 
   setText("carDApplyNow", d.apply);
 }
+function applyAdminTranslation(lang) {
+  setText("adminPriceLabel", lang === "ar" ? "السعر (ج.م)" : "Price (EGP)");
+}
 function toggleAllValues(lang){
   const showAr = (lang === 'ar');
 
@@ -1230,27 +1322,96 @@ function toggleAllValues(lang){
     ar.style.display = showAr ? 'block' : 'none';
   }
 }
+function normalizeCarBrandName(brand) {
+  if (!brand) return "";
 
+  const clean = String(brand)
+    .trim()
+    .toLowerCase()
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ");
+
+  if (clean === "mercedes benz") return "Mercedes-Benz";
+  if (clean === "xiaomi") return "Xiaomi";
+
+  return brand;
+}
+
+function translateCarBrand(value, lang) {
+  if (lang !== "ar") return value;
+
+  const normalized = normalizeCarBrandName(value);
+
+  return CAR_BRAND_AR[value] || CAR_BRAND_AR[normalized] || value;
+}
+
+function updateCarDropdownTranslations(lang) {
+  const d = (TEXTS[lang] || TEXTS.en).carsForSalePage;
+
+  const brandWrap = document.querySelector('[data-custom-select="brand"]');
+  const modelWrap = document.querySelector('[data-custom-select="model"]');
+
+  setText("cfsBrandLabel", d.brand);
+  setText("cfsModelLabel", d.model);
+
+  if (brandWrap) {
+    const brandInput = brandWrap.querySelector("input[type='hidden']");
+    const brandText = brandWrap.querySelector("[data-select-text]");
+
+    brandWrap.querySelectorAll(".cfsNiceOption").forEach((btn) => {
+      const value = btn.dataset.value || "";
+
+      btn.textContent = value === ""
+        ? d.allBrands
+        : translateCarBrand(value, lang);
+    });
+
+    const selectedBrand = brandInput?.value || "";
+
+    if (brandText) {
+      brandText.textContent = selectedBrand
+        ? translateCarBrand(selectedBrand, lang)
+        : d.allBrands;
+    }
+  }
+
+  if (modelWrap) {
+    const modelInput = modelWrap.querySelector("input[type='hidden']");
+    const modelText = modelWrap.querySelector("[data-select-text]");
+
+    modelWrap.querySelectorAll(".cfsNiceOption").forEach((btn) => {
+      const value = btn.dataset.value || "";
+      btn.textContent = value === "" ? d.allModels : value;
+    });
+
+    const selectedModel = modelInput?.value || "";
+
+    if (modelText) {
+      modelText.textContent = selectedModel || d.allModels;
+    }
+  }
+}
 function setLanguage(lang) {
   localStorage.setItem(LANG_KEY, lang);
   applyNavTranslation(lang);
   applyHomeTranslation(lang);
   applyFooterTranslation(lang);
   applyAboutPageTranslation(lang);
-  applyProductsPageTranslation(lang)
-  applyAutomotivePageTranslation(lang)
-  applyBrandNewCarsTranslation(lang)
-  applyHomeFinishingTranslation(lang) 
-  applyGoldTranslation(lang) 
-  applyMortgageTranslation(lang)
-  applySummerVehiclesTranslation(lang)
-  applyInsuranceTranslation(lang)
-  applyUsedCarsTranslation(lang)
-  applyTransportationTranslation(lang) 
-  applyVanTranslation(lang)
-  applyCarsForSaleTranslation(lang)
-  applyCarDetailsTranslation(lang) 
-  toggleAllValues(lang)
+  applyProductsPageTranslation(lang);
+  applyAutomotivePageTranslation(lang);
+  applyBrandNewCarsTranslation(lang);
+  applyHomeFinishingTranslation(lang);
+  applyGoldTranslation(lang);
+  applyMortgageTranslation(lang);
+  applySummerVehiclesTranslation(lang);
+  applyInsuranceTranslation(lang);
+  applyUsedCarsTranslation(lang);
+  applyTransportationTranslation(lang);
+  applyVanTranslation(lang);
+  applyCarsForSaleTranslation(lang);
+  applyCarDetailsTranslation(lang);
+  toggleAllValues(lang);
+  updateCarDropdownTranslations(lang);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

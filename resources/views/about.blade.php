@@ -19,7 +19,7 @@
     <div class="aboutTop">
       <div class="aboutTop__left">
         <h1 class="aboutTitle" id="aboutPageTitle">
-          About Shawer<br><h1 class="aboutTitle" id="aboutPageTitleSpan">Company</h1>
+          About Shawer<br> 
         </h1>
       </div>
 
