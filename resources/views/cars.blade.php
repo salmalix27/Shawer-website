@@ -253,7 +253,7 @@
       <h3 class="cfsBrand">{{ strtoupper($car->brand) }}</h3>
 
       <div class="cfsPrice">
-        EGP {{ number_format($car->price) }}
+        {{ number_format($car->price) }} <small>EGP</small>
       </div>
 
       <div class="cfsModel">

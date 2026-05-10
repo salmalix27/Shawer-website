@@ -3203,3 +3203,21 @@ a,
     height: 190px;
   }
 }
+.cfsPrice small {
+  font-size: 0.6em;
+  margin-left: 4px;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+@media (max-width: 420px) {
+  .cfsPrice {
+    font-size: 15px !important;
+    letter-spacing: 0 !important;
+  }
+
+  .cfsPrice small {
+    font-size: 0.55em;
+    margin-left: 3px;
+  }
+}
