@@ -82,7 +82,7 @@
           </a>
 
           <a class="productCard" href="{{ route('homeFinishing')}}">
-            <img class="productCard__img" src="{{ asset('img/home_finishing.png') }}" alt="Home finishing">
+           <img class="productCard__img" src="{{ asset('img/Home_finishing.png') }}" alt="Home finishing">
             <div class="productCard__overlay">
               <span class="productCard__label" id="prodHomeFinLabel">HOME FINISHING</span>
             </div>

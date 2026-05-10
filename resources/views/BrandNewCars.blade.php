@@ -34,7 +34,7 @@
         {{-- RIGHT COLUMN --}}
         <aside class="bncRight">
           <div class="bncMedia">
-            <img src="{{ asset('img/brandNewCar.png') }}" alt="Brand new car">
+            <img src="{{ asset('img/BrandNewCar.png') }}" alt="Brand new car">
           </div>
         </aside>
 

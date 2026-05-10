@@ -26,7 +26,7 @@
         </a>
 
         <a class="prodCard" href="{{ route('homeFinishing')}}">
-          <img src="{{ asset('img/home_finishing.png') }}" alt="Home Finishing">
+          <img src="{{ asset('img/Home_finishing.png') }}" alt="Home Finishing">
           <span class="prodCard__label">
             <span class="prodCard__badge" id="prodPageHomeFin">HOME FINISHING</span>
           </span>

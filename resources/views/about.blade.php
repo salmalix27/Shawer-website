@@ -158,7 +158,7 @@
 
     <!-- Right card -->
     <article class="ceoCard teamCard">
-      <img src="{{ asset('img/ahmed.png') }}" alt="Ahmed Gamal">
+      <img src="{{ asset('img/Ahmed.png') }}" alt="Ahmed Gamal">
 
       <div class="teamOverlay">
         <div class="teamMeta">
