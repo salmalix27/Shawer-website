@@ -44,7 +44,7 @@
 {{-- ===== Price bar ===== --}}
 <section class="carDBar">
   <div class="carDPriceBox">
-    <div class="carDPrice">EGP {{ number_format($car->price) }}</div>
+    <div class="carDPrice">{{ number_format($car->price) }}</div>
 
     <div class="carDCity">
       <span class="valEn">{{ strtoupper($car->city_en ?? '') }}</span>
