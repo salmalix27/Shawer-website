@@ -58,7 +58,7 @@
       </div>
 
       <div>
-        <label>Version</label>
+        <label>category</label>
         <input name="version" value="{{ old('version') }}" placeholder="AMG">
       </div>
 
@@ -163,9 +163,9 @@
 
     {{-- ===== Images ===== --}}
     <div style="margin-top:16px;">
-      <label>Upload 6 Images (exactly)</label>
+      <label>Upload 9 Images (exactly)</label>
       <input type="file" name="images[]" multiple accept="image/*" required>
-      <small style="display:block;opacity:.75;margin-top:6px;">You must select exactly 6 images.</small>
+      <small style="display:block;opacity:.75;margin-top:6px;">You must select exactly 9 images.</small>
     </div>
 
     <div style="margin-top:18px;display:flex;gap:10px;">

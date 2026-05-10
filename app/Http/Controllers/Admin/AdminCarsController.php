@@ -103,7 +103,7 @@ class AdminCarsController extends Controller
   'doors' => 'nullable|integer|min:1|max:8',
 
   
-  'images' => 'required|array|size:6',
+  'images' => 'required|array|size:9',
   'images.*' => 'required|image|max:4096',
   'is_special' => 'nullable|boolean',
 ]);
@@ -173,7 +173,7 @@ class AdminCarsController extends Controller
         'version' => 'nullable|string|max:120',
         'doors' => 'nullable|integer|min:1|max:8',
 
-        'images' => 'nullable|array|size:6',
+        'images' => 'nullable|array|size:9',
         'images.*' => 'nullable|image|max:4096',
         'remove_gallery' => 'nullable|boolean',
         'is_special' => 'nullable|boolean',

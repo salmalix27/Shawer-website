@@ -277,10 +277,34 @@ a{color:inherit;text-decoration:none}
   background:#fff;
   border:1px solid var(--border);
   border-radius:16px;
-  overflow:hidden;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--shadow);
 }
-.adminTable{width:100%;border-collapse:collapse}
+
+.adminTable{
+  width:100%;
+  min-width:850px;
+  border-collapse:collapse;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  white-space:nowrap;
+  position:relative;
+  z-index:5;
+}
+
+.actions a,
+.actions button,
+.btnSm{
+  pointer-events:auto;
+  position:relative;
+  z-index:6;
+}
 .adminTable th,.adminTable td{
   padding:12px 10px;
   border-bottom:1px solid rgba(1,7,37,.08);
@@ -350,8 +374,29 @@ a{color:inherit;text-decoration:none}
 @media(max-width:980px){
   .adminStats{grid-template-columns: 1fr 1fr;}
 }
+ 
 @media(max-width:700px){
   .adminStats{grid-template-columns: 1fr;}
   .grid2{grid-template-columns:1fr}
   .adminH1{font-size:36px}
+
+  .tableWrap{
+    overflow-x:auto;
+  }
+
+  .adminTable{
+    min-width:850px;
+  }
+
+  .adminTable th,
+  .adminTable td{
+    font-size:13px;
+    padding:10px 8px;
+  }
+
+  .btnSm{
+    height:36px;
+    padding:0 14px;
+    font-size:13px;
+  }
 }

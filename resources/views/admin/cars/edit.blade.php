@@ -45,6 +45,43 @@
 <script>
   window.adminModelsByBrand = @json($modelsByBrand);
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const brandSelect = document.getElementById("adminBrandSelect");
+  const modelSelect = document.getElementById("adminModelSelect");
+  const modelsByBrand = window.adminModelsByBrand || {};
+
+  if (!brandSelect || !modelSelect) return;
+
+  function fillModels() {
+    const selectedBrand = brandSelect.value;
+    const selectedModel = modelSelect.dataset.selected || "";
+
+    modelSelect.innerHTML = '<option value="">Select Model</option>';
+
+    const models = modelsByBrand[selectedBrand] || [];
+
+    models.forEach(function (model) {
+      const option = document.createElement("option");
+      option.value = model;
+      option.textContent = model;
+
+      if (model === selectedModel) {
+        option.selected = true;
+      }
+
+      modelSelect.appendChild(option);
+    });
+  }
+
+  brandSelect.addEventListener("change", function () {
+    modelSelect.dataset.selected = "";
+    fillModels();
+  });
+
+  fillModels();
+});
+</script>
 
       <div>
         <label>Year</label>
@@ -62,7 +99,7 @@
       </div>
 
       <div>
-        <label>Version</label>
+        <label>Category</label>
         <input name="version" value="{{ old('version', $car->version) }}" placeholder="AMG">
       </div>
 
@@ -198,10 +235,10 @@
 
 {{-- ===== Replace images (disabled unless remove checked) ===== --}}
 <div style="margin-top:16px;">
-  <label>Upload New Images (exactly 6)</label>
+  <label>Upload New Images (exactly 9)</label>
   <input type="file" id="newImagesInput" name="images[]" multiple accept="image/*" disabled>
   <small style="display:block;opacity:.75;margin-top:6px;">
-    You must select exactly 6 images.
+    You must select exactly 9 images.
   </small>
 </div>
 

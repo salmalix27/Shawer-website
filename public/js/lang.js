@@ -398,7 +398,7 @@ carDetailsPage: {
 
   brand: "Brand",
   model: "Model",
-  version: "Version",
+  version: "Category",
   payment: "Payment Options",
   body: "Body Type",
   ac: "Air Conditioning",

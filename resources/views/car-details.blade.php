@@ -23,8 +23,8 @@
         $fallback = $car->image ? asset('storage/'.$car->image) : asset('img/mercedes.png');
         $imgs = [$fallback];
       }
-      while (count($imgs) < 6) $imgs[] = asset('img/mercedes.png');
-      $imgs = array_slice($imgs, 0, 6);
+      while (count($imgs) < 9) $imgs[] = asset('img/mercedes.png');
+      $imgs = array_slice($imgs, 0, 9);
       $mainImg = $imgs[0];
     @endphp
 
@@ -34,7 +34,7 @@
   </div>
 
   <div class="carDThumbs">
-    @foreach(array_slice($imgs, 1, 5) as $i => $img)
+    @foreach(array_slice($imgs, 0, 9) as $i => $img)
       <button class="carDThumb" type="button" data-img="{{ $img }}">
         <img src="{{ $img }}" alt="thumb {{ $i + 2 }}">
       </button>
@@ -174,7 +174,7 @@
         <div class="carDRow"><span id="carDBrandKey">Brand</span><b>{{ strtoupper($car->brand) }}</b></div>
         <div class="carDRow"><span id="carDModelKey">Model</span><b>{{ strtoupper($car->model) }}</b></div>
 
-        <div class="carDRow"><span id="carDVersionKey">Version</span><b>{{ strtoupper($car->version ?? '—') }}</b></div>
+        <div class="carDRow"><span id="carDVersionKey">Category</span><b>{{ strtoupper($car->version ?? '—') }}</b></div>
 
         <div class="carDRow">
           <span id="carDPaymentKey">Payment Options</span>
