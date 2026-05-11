@@ -39,7 +39,7 @@
   }
 
   $imgs = array_slice($imgs, 0, 9);
-  $mainImg = $imgs[0];
+  $imgPath = $imgs[0];
 @endphp
 <section class="carDGallery">
   <div class="carDMain">

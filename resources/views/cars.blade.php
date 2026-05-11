@@ -248,7 +248,7 @@
   }
 
   $imgs = array_slice($imgs, 0, 9);
-  $mainImg = $imgs[0];
+  $imgPath = $imgs[0];
 @endphp
 
 <article class="cfsCard" data-slider data-images='@json($imgs)'>
