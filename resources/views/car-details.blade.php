@@ -13,21 +13,34 @@
 
 <main class="carDPage">
   <div class="container carDWrap">
+{{-- ===== Gallery ===== --}}
+@php
+  $raw = $car->images;
 
-    {{-- ===== Gallery ===== --}}
-    @php
-      $raw = $car->images;
-      if (is_string($raw)) $raw = json_decode($raw, true) ?: [];
-      if (is_array($raw) && count($raw)) $imgs = array_map(fn($p) => asset('storage/'.$p), $raw);
-      else {
-        $fallback = $car->image ? asset('storage/'.$car->image) : asset('img/mercedes.png');
-        $imgs = [$fallback];
-      }
-      while (count($imgs) < 9) $imgs[] = asset('img/mercedes.png');
-      $imgs = array_slice($imgs, 0, 9);
-      $mainImg = $imgs[0];
-    @endphp
+  if (is_string($raw)) {
+    $raw = json_decode($raw, true) ?: [];
+  }
 
+  if (is_array($raw) && count($raw)) {
+    $imgs = array_map(
+      fn($p) => \Illuminate\Support\Facades\Storage::disk('cars')->url($p),
+      $raw
+    );
+  } else {
+    $fallback = $car->image
+      ? \Illuminate\Support\Facades\Storage::disk('cars')->url($car->image)
+      : asset('img/mercedes.png');
+
+    $imgs = [$fallback];
+  }
+
+  while (count($imgs) < 9) {
+    $imgs[] = asset('img/mercedes.png');
+  }
+
+  $imgs = array_slice($imgs, 0, 9);
+  $mainImg = $imgs[0];
+@endphp
 <section class="carDGallery">
   <div class="carDMain">
     <img id="carMainImg" src="{{ $mainImg }}" alt="Car image">

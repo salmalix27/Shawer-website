@@ -27,9 +27,17 @@
       </thead>
       <tbody>
         @forelse($cars as $car)
-          @php
-            $thumb = $car->image ? asset('storage/'.$car->image) : asset('img/mercedes.png');
-          @endphp
+@php
+  $images = $car->images;
+
+  if (is_string($images)) {
+    $images = json_decode($images, true) ?: [];
+  }
+
+  $thumb = !empty($images)
+    ? \Illuminate\Support\Facades\Storage::disk('cars')->url($images[0])
+    : asset('img/mercedes.png');
+@endphp
           <tr>
             <td>
               <img src="{{ $thumb }}" alt="thumb" style="width:70px;height:48px;object-fit:cover;border-radius:10px;">

@@ -130,23 +130,26 @@ $maxPrice = (int) str_replace(',', '', (string) $request->input('max_price'));
     return view('cars', compact('cars', 'brands', 'modelsByBrand'));
 }
 
-    public function show(Car $car)
-    {
-        $imgs = [];
+public function show(Car $car)
+{
+    $imgs = [];
 
-        if (!empty($car->images) && is_array($car->images)) {
-            foreach ($car->images as $image) {
-                $imgs[] = asset('storage/' . $image);
-            }
+    if (!empty($car->images) && is_array($car->images)) {
+        foreach ($car->images as $image) {
+            $imgs[] = \Illuminate\Support\Facades\Storage::disk('cars')->url($image);
         }
-
-        if (empty($imgs)) {
-            $imgPath = $car->image ? asset($car->image) : asset('img/mercedes.png');
-            $imgs = array_fill(0, 6, $imgPath);
-        }
-
-        return view('car-details', compact('car', 'imgs'));
     }
+
+    if (empty($imgs)) {
+        $imgPath = $car->image
+            ? \Illuminate\Support\Facades\Storage::disk('cars')->url($car->image)
+            : asset('img/mercedes.png');
+
+        $imgs = array_fill(0, 9, $imgPath);
+    }
+
+    return view('car-details', compact('car', 'imgs'));
+}
 
     public function edit(Car $car)
     {
@@ -175,31 +178,31 @@ $maxPrice = (int) str_replace(',', '', (string) $request->input('max_price'));
         ]);
 
      
-        if ($request->has('remove_gallery')) {
+       if ($request->has('remove_gallery')) {
 
-            if (!empty($car->images) && is_array($car->images)) {
-                foreach ($car->images as $oldImage) {
-                    Storage::disk('public')->delete($oldImage);
-                }
-            }
-
-            $newImages = [];
-
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $newImages[] = $image->store('cars', 'public');
-                }
-            }
-
-            $data['images'] = $newImages;
-        } else {
-            unset($data['images']);
+    if (!empty($car->images) && is_array($car->images)) {
+        foreach ($car->images as $oldImage) {
+            Storage::disk('cars')->delete($oldImage);
         }
+    }
 
-        $car->update($data);
+    $newImages = [];
 
-        return redirect()
-            ->route('cars.show', $car->id)
-            ->with('success', 'Car updated successfully');
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+            $newImages[] = $image->store('cars/gallery', 'cars');
+        }
+    }
+
+    $data['images'] = $newImages;
+} else {
+    unset($data['images']);
+}
+
+$car->update($data);
+
+return redirect()
+    ->route('cars.show', $car->id)
+    ->with('success', 'Car updated successfully');
     }
 }

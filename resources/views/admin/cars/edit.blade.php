@@ -214,11 +214,16 @@ document.addEventListener("DOMContentLoaded", function () {
 {{-- ===== Current images ===== --}}
 <div style="margin-top:16px;">
   <label>Current Images</label>
+
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
     @foreach(($car->images ?? []) as $img)
-      <img src="{{ asset('storage/'.$img) }}" style="width:110px;height:80px;object-fit:cover;border-radius:12px;">
+      <img
+        src="{{ \Illuminate\Support\Facades\Storage::disk('cars')->url($img) }}"
+        style="width:110px;height:80px;object-fit:cover;border-radius:12px;"
+      >
     @endforeach
   </div>
+
   <small style="display:block;opacity:.75;margin-top:6px;">Main image is the first one.</small>
 </div>
 
